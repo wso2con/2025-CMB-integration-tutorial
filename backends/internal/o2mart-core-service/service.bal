@@ -1,11 +1,54 @@
-// Mock service for products.
 import ballerina/http;
 
 configurable int port = 8080;
 
-service /products on new http:Listener(port) {
+service on new http:Listener(port) {
 
-    resource function get .(string[]? productIds = ()) returns xml|http:NotFound {
+    resource function get customers() returns table<Customer> {
+        lock {
+            return customers.clone();
+        }
+    }
+
+    resource function get customers/[string customerId]() returns Customer|http:NotFound {
+        lock {
+            if customers.hasKey(customerId) {
+                return customers.get(customerId).clone();
+            }
+        }
+        return http:NOT_FOUND;
+    }
+
+    resource function post customers(Customer customer) returns http:Created {
+        lock {
+            customers.add(customer.clone());
+        }
+        return http:CREATED;
+    }
+
+    resource function get orders() returns table<Order> {
+        lock {
+            return orders.clone();
+        }
+    }
+
+    resource function get orders/[string orderId]() returns Order|http:NotFound {
+        lock {
+            if orders.hasKey(orderId) {
+                return orders.get(orderId).clone();
+            }
+        }
+        return http:NOT_FOUND;
+    }
+
+    resource function post orders(Order 'order) returns http:Created {
+        lock {
+            orders.add('order.clone());
+        }
+        return http:CREATED;
+    }
+
+    resource function get products(string[]? productIds = ()) returns xml|http:NotFound {
         lock {
             if productIds is () {
                 return xml `<products>${productsData.clone()}</products>`;
@@ -21,7 +64,7 @@ service /products on new http:Listener(port) {
         }
     }
 
-    resource function get [string productId]() returns xml|http:NotFound {
+    resource function get products/[string productId]() returns xml|http:NotFound {
         lock {
             xml:Element[] matchingProducts = from xml:Element product in productsData.elements()
                 where product.getAttributes().get("id") == productId

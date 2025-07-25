@@ -1,6 +1,6 @@
 [package]
 org = "wso2con"
-name = "o2mart_service"
+name = "o2mart_core_service"
 version = "0.1.0"
 distribution = "2201.12.7"
 
