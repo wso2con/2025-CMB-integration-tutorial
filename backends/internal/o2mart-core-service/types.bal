@@ -1,9 +1,7 @@
-enum Loyalty {
-    BRONZE,
-    SILVER,
-    GOLD,
-    PLATINUM
-}
+type Loyalty record {
+    int points;
+    string expiryDate;
+};
 
 type Customer record {
     readonly string id;

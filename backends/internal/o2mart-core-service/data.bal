@@ -51,13 +51,13 @@ isolated xml<xml:Element|xml:Text> productsData = xml `<product id="P1001">
     </product>`;
 
 isolated table<Customer> key (id) customers = table [
-    {id: "C001", name: "Alice Fern", email: "alice@example.com", phone: "555-123-4567", loyalty: GOLD},
-    {id: "C002", name: "Brian Holt", email: "brian@test.org", phone: "555-234-5678", loyalty: SILVER},
-    {id: "C003", name: "Clara Zhang", email: "clara@sample.net", phone: "555-345-6789", loyalty: PLATINUM},
-    {id: "C004", name: "David Miller", email: "david@demo.dev", phone: "555-456-7890", loyalty: BRONZE},
-    {id: "C005", name: "Emma Wilson", email: "emma@test.org", phone: "555-567-8901", loyalty: SILVER},
-    {id: "C006", name: "Frank Johnson", email: "frank@example.com", phone: "555-678-9012", loyalty: GOLD},
-    {id: "C007", name: "Grace Lee", email: "grace@sample.net", phone: "555-789-0123", loyalty: BRONZE}
+    {id: "C001", name: "Tharik Kanaka", email: "tharik@wso2.com", phone: "555-123-4567", loyalty: {points: 1250, expiryDate: "2025-07-31"}},
+    {id: "C002", name: "Brian Holt", email: "brian@test.org", phone: "555-234-5678", loyalty: {points: 750, expiryDate: "2025-06-31"}},
+    {id: "C003", name: "Clara Zhang", email: "clara@sample.net", phone: "555-345-6789", loyalty: {points: 2800, expiryDate: "2026-08-31"}},
+    {id: "C004", name: "David Miller", email: "david@demo.dev", phone: "555-456-7890", loyalty: {points: 350, expiryDate: "2025-10-20"}},
+    {id: "C005", name: "Emma Wilson", email: "emma@test.org", phone: "555-567-8901", loyalty: {points: 920, expiryDate: "2025-12-15"}},
+    {id: "C006", name: "Frank Johnson", email: "frank@example.com", phone: "555-678-9012", loyalty: {points: 7500, expiryDate: "2026-02-28"}},
+    {id: "C007", name: "Grace Lee", email: "grace@sample.net", phone: "555-789-0123", loyalty: {points: 180, expiryDate: "2025-09-30"}}
 ];
 
 isolated table<Order> key (id) orders = table [
