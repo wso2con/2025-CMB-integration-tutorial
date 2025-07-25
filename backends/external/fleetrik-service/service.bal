@@ -13,9 +13,9 @@ enum ShippingStatus {
     DELIVERED = "Delivered"
 }
 
-service /fleetrik on new http:Listener(port) {
+service on new http:Listener(port) {
 
-    resource function get [string trackingId]() returns TrackingResponse|http:NotFound {
+    resource function get tracking/[string trackingId]() returns TrackingResponse|http:NotFound {
         lock {
             if trackingData.hasKey(trackingId) {
                 return {
