@@ -1,0 +1,7 @@
+[package]
+org = "maryamm"
+name = "o2mart_promotions_service"
+version = "0.1.0"
+
+[build-options]
+sticky = true
