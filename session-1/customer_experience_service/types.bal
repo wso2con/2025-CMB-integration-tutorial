@@ -1,24 +1,4 @@
 
-type ItemsItem record {|
-    string productId;
-    int quantity;
-|};
-
-type Items ItemsItem[];
-
-type Order record {|
-    string id;
-    string customerId;
-    Items items;
-    decimal total;
-    string trackingId?;
-|};
-
-type TrackingResponse record {
-    string trackingId;
-    string status;
-};
-
 type PromotionsResultItem record {|
     string productId;
     string label;

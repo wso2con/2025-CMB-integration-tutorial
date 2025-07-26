@@ -9,23 +9,6 @@ listener http:Listener httpDefaultListener = http:getDefaultListener();
 
 service /o2mart on httpDefaultListener {
 
-    resource function get deliveries(string orderId) returns string|http:NotFound {
-        do {
-            Order orderRes = check backend->get(string `/orders/${orderId}`);
-            string? trackingId = orderRes.trackingId;
-            if trackingId is () {
-                fail error("Tracking ID not found for order: " + orderId);
-            }
-
-            // If trackingId is present, return it
-            TrackingResponse trackingResponse = check fleetrik->get(string `/${trackingId}`);
-            return trackingResponse.status;
-        } on fail error err {
-            // handle error
-            return {body: "Not found"};
-        }
-    }
-
     resource function get promotions(string customerId) returns error|PromotionsResult {
         do {
             Customer customerDetails = check backend->get(string `/customers/${customerId}`);
