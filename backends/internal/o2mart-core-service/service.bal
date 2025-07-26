@@ -1,8 +1,6 @@
 import ballerina/http;
 
-configurable int port = 8080;
-
-service on new http:Listener(port) {
+service / on new http:Listener(8080) {
 
     resource function get customers() returns table<Customer> {
         lock {
