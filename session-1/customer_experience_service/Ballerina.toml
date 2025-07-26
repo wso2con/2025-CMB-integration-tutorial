@@ -1,0 +1,12 @@
+[package]
+org = "maryamm"
+name = "customer_experience_service"
+version = "0.1.0"
+
+[build-options]
+sticky = true
+
+[[tool.openapi]]
+id = "promos"
+targetModule = "promos"
+filePath = "/Users/maryamm/Workspace/Demo/WSO2Con/Integration_Lab/2025-CMB-integration-tutorial/backends/internal/o2mart_promotions_service/main_openapi.yaml"
