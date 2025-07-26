@@ -45,8 +45,17 @@ type Feedback record {|
 |};
 
 type FeedbackAnalysis record {|
-    # One of positive, negative, or neutral
-    string sentiment;
-    # Applicable categories out of product quality, packaging, and/or delivery
+    # The sentiment of the feedback
+    Sentiment sentiment;
+    # Comma separated list of applicable categories out of product quality, packaging, and/or delivery
     string categories;
+    # Comma separated list of applicable product(s)
+    string products;
 |};
+
+enum Sentiment {
+    POSITIVE,
+    NEGATIVE,
+    NEUTRAL
+}
+

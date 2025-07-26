@@ -44,9 +44,10 @@ service /o2mart on httpDefaultListener {
                     subject: string `Received negative feedack for order '${payload.orderId}'`,
                     bodyInText: string `Received negative feedack for order '${payload.orderId}'.
 	
-	Feedback: ${feedback}	
+	Feedback: ${feedback}
 	Categories: ${feedbackAnalysis.categories}
-`
+	Products: ${feedbackAnalysis.products}
+	`
                 });
                 log:printInfo("Received negative feedback", feedback = feedback, aiAnalysis = feedbackAnalysis, orderId = payload.orderId);
             } else {
