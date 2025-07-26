@@ -39,3 +39,14 @@ type Promotion record {|
     string ends;
 |};
 
+type Feedback record {|
+    string orderId;
+    string feedback;
+|};
+
+type FeedbackAnalysis record {|
+    # One of positive, negative, or neutral
+    string sentiment;
+    # Applicable categories out of product quality, packaging, and/or delivery
+    string categories;
+|};
