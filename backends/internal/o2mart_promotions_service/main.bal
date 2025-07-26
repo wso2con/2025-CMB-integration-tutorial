@@ -2,7 +2,7 @@ import ballerina/http;
 
 listener http:Listener promotionsListener = new (port = 8084);
 
-service / on promotionsListener {
+service /o2martpromotions on promotionsListener {
     resource function get promotions(int loyalty) returns Promotion[] {
         do {
             LoyaltyTier loyaltyTier = getLoyaltyTier(loyalty);
