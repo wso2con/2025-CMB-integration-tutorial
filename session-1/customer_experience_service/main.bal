@@ -1,8 +1,8 @@
-import ballerina/ai as _; // Temp workaround for `generate` issue
 import ballerina/data.xmldata;
 import ballerina/http;
 import ballerina/lang.array;
 import ballerina/log;
+import ballerina/sql;
 import ballerinax/googleapis.gmail;
 
 import maryamm/customer_experience_service.promos;
@@ -37,6 +37,10 @@ service /o2mart on httpDefaultListener {
         do {
             string feedback = payload.feedback;
             FeedbackAnalysis feedbackAnalysis = check mp->generate(`Analyze the sentiment of the following customer feedback for an order. ${feedback}`);
+            sql:ExecutionResult sqlExecutionresult = check dbClient->execute(`INSERT INTO feedback (order_id, feedback, sentiment, categories, products)
+     VALUES (${payload.orderId}, ${feedback}, ${feedbackAnalysis.sentiment}, 
+             ${feedbackAnalysis.categories}, ${feedbackAnalysis.products})`);
+            var dbId = sqlExecutionresult.lastInsertId;
             string sentimentValue = feedbackAnalysis.sentiment;
             if sentimentValue.equalsIgnoreCaseAscii("negative") {
                 gmail:Message gmailMessage = check gmailClient->/users/["me"]/messages/send.post({
@@ -49,9 +53,9 @@ service /o2mart on httpDefaultListener {
 	Products: ${feedbackAnalysis.products}
 	`
                 });
-                log:printInfo("Received negative feedback", feedback = feedback, aiAnalysis = feedbackAnalysis, orderId = payload.orderId);
+                log:printInfo("Received negative feedback", feedback = feedback, orderId = payload.orderId, aiAnalysis = feedbackAnalysis, feedbackId = dbId);
             } else {
-                log:printInfo("Received non-negative feedback", feedback = feedback, aiAnalysis = feedbackAnalysis, orderId = payload.orderId);
+                log:printInfo("Received non-negative feedback", feedback = feedback, orderId = payload.orderId, feedbackId = dbId, aiAnalysis = feedbackAnalysis);
             }
             return "Feedback submitted succesfully";
         } on fail error err {
