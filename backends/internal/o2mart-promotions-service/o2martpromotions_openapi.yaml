@@ -1,14 +1,14 @@
 openapi: 3.0.1
 info:
-  title: Main Openapi Yaml
+  title: O2martpromotions
   version: 0.1.0
 servers:
-- url: "{server}:{port}/"
+- url: "{server}:{port}/o2martpromotions"
   variables:
     server:
       default: http://localhost
     port:
-      default: "8084"
+      default: "9090"
 paths:
   /promotions:
     get:
