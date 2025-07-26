@@ -1,6 +1,6 @@
 import ballerina/http;
 
-service / on new http:Listener(8080) {
+service /o2mart on new http:Listener(8080) {
 
     resource function get customers() returns table<Customer> {
         lock {
