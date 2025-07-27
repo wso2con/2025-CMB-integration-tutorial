@@ -51,10 +51,11 @@ service /o2martcore on new http:Listener(8080) {
             if productIds is () {
                 return xml `<products>${productsData.clone()}</products>`;
             }
-            xml<xml:Element> filtered = from xml:Element product in productsData.elements()
-                let string productId = product.getAttributes().get("id")
-                where productIds.some(id => id == productId)
-                select product;
+            
+            xml<xml:Element> filtered = from string productId in productIds.clone()
+                    join xml:Element product in productsData.elements()
+                    on productId equals product.getAttributes().get("id")
+                    select product;
             if filtered.length() != productIds.length() {
                 return <http:NotFound>{body: xml `<error>One or more products not found</error>`};
             }
