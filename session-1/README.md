@@ -2,7 +2,12 @@
 
 ## Backends 
 
-- O2Mart Core Backend - https://10717d68-0b05-4594-95ed-2f4f1c0c26b6-dev.e1-us-east-azure.choreoapis.dev/default/o2mart-core-service/v1.0
+- O2Mart Core Backend
+
+    ```
+    https://10717d68-0b05-4594-95ed-2f4f1c0c26b6-dev.e1-us-east-azure.choreoapis.dev/default/o2mart-core-service/v1.0
+    ```
+
 - O2Mart Promotions Service OpenAPI specification - [o2martpromotions_openapi.yaml](./o2martpromotions_openapi.yaml)
 
 ## Integration as an API
@@ -88,25 +93,23 @@ The integration is as follows.
     ]
     ```
 
-3. For each product in the promotions list, retrieve the product details from the core service.
+3. For each product in the promotions list
+
+    i. retrieve the product details from the core service.
 
     > For demonstration, we assume a small number of products and retrieve product details one at a time.
 
     Use the product ID as a path parameter - `/products/{promotion.productId}` - and retrieve product details.
 
     ```xml
-    <products><product id="P1001">
+    <product id="P1001">
         <name>Mooberry Whole Milk 1L</name>
         <price>2.49</price>
         <stock>120</stock>
-    </product><product id="P1005">
-        <name>PureSalt Crystal Salt 1kg</name>
-        <price>0.99</price>
-        <stock>210</stock>
-    </product></products>
+    </product>
     ```
 
-4. Use the promotion details and the product details to produce output in the expected format.
+    ii. Use the promotion details and the product details to produce output in the expected format.
 
     Try using 
     - AI-assisted data mapping
@@ -116,7 +119,9 @@ The integration is as follows.
         Define a function that accepts a date in the format of "2025-08-04" and produces a string with just the month followed by the day "August 4"
         ```
 
-5. Introduce a test for the generated function. Also try generating tests via the Copilot.
+You can test the integration with sample customer IDs - `C001` to `C007`
+
+Also try generating tests via the Copilot.
 
 #### Feedback
 
@@ -162,4 +167,33 @@ Sample request payload:
 
 3. If the sentiment is negative, send an email to a configured email address notifying of the negative feedback, including some details.
 
-### Branches
+Sample feedback to try with:
+
+```json
+{
+    "orderId": "O1001",
+    "feedback": "Loved the fast delivery and the packaging was neat. The milk was fresh too!"
+}
+```
+
+```json
+{
+    "orderId": "O1005",
+    "feedback": "The noodles were crushed and one of the items was missing from the box."
+}
+```
+
+```json
+{
+    "orderId": "O1004",
+    "feedback": "The delivery was okay. Products were as expected."
+}
+```
+
+```json
+{
+    "orderId": "O1002",
+    "feedback": "I was quite disappointed with this order. It took significantly longer to arrive than expected, which was already frustrating. On top of that, the cereal box was visibly damaged when it was delivered — the top corner was crushed, and it looked like it had been handled roughly. This really affected the overall experience, and I’m hesitant to order again if packaging and delivery times aren’t improved."
+}
+```
+
