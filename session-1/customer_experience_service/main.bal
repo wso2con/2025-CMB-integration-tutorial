@@ -13,14 +13,14 @@ service /o2mart on httpDefaultListener {
 
     resource function get promotions(string customerId) returns error|PromotionsResult {
         do {
-            Customer customerDetails = check backend->get(string `/customers/${customerId}`);
+            Customer customerDetails = check backendConnection->get(string `/customers/${customerId}`);
             int loyaltyPoints = customerDetails.loyalty.points;
             promos:Promotion[] promosForCustomer = check promosConnection->/promotions.get(loyalty = loyaltyPoints);
 
             PromotionsResultItem[] promotionsResultItems = [];
 
             foreach promos:Promotion promotion in promosForCustomer {
-                xml productXml = check backend->get(string `/products/${promotion.productId}`);
+                xml productXml = check backendConnection->get(string `/products/${promotion.productId}`);
                 Product product = check xmldata:parseAsType(productXml);
                 PromotionsResultItem promotionsResultItem = check transformPromotion(promotion, product);
                 array:push(promotionsResultItems, promotionsResultItem);
@@ -36,14 +36,14 @@ service /o2mart on httpDefaultListener {
     resource function post feedback(@http:Payload Feedback payload) returns string|error {
         do {
             string feedback = payload.feedback;
-            FeedbackAnalysis feedbackAnalysis = check mp->generate(`Analyze the sentiment of the following customer feedback for an order. ${feedback}`);
-            sql:ExecutionResult sqlExecutionresult = check dbClient->execute(`INSERT INTO feedback (order_id, feedback, sentiment, categories, products)
+            FeedbackAnalysis feedbackAnalysis = check model->generate(`Analyze the sentiment of the following customer feedback for an order and extract relevant details: ${feedback}`);
+            sql:ExecutionResult sqlExecutionresult = check dbConnection->execute(`INSERT INTO feedback (order_id, feedback, sentiment, categories, products)
      VALUES (${payload.orderId}, ${feedback}, ${feedbackAnalysis.sentiment}, 
              ${feedbackAnalysis.categories}, ${feedbackAnalysis.products})`);
             var dbId = sqlExecutionresult.lastInsertId;
             string sentimentValue = feedbackAnalysis.sentiment;
             if sentimentValue.equalsIgnoreCaseAscii("negative") {
-                gmail:Message gmailMessage = check gmailClient->/users/["me"]/messages/send.post({
+                gmail:Message gmailMessage = check gmailConnection->/users/["me"]/messages/send.post({
                     to: [emailRecipient],
                     subject: string `Received negative feedack for order '${payload.orderId}'`,
                     bodyInText: string `Received negative feedack for order '${payload.orderId}'.
