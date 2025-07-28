@@ -10,6 +10,144 @@
 
 - O2Mart Promotions Service OpenAPI specification - [o2martpromotions_openapi.yaml](./o2martpromotions_openapi.yaml)
 
+
+## Automation
+
+### Overview
+
+This session is based on the **O2Mart** sample scenario. We will walk through Automation and Integration concepts using API samples.
+
+![Automation](./images/automation_ep.png)
+
+1. **Add an HTTP Connector:**
+
+   * Set the URL to:
+
+     ```
+     "https://10717d68-0b05-4594-95ed-2f4f1c0c26b6-dev.e1-us-east-azure.choreoapis.dev/default/o2mart-core-service/v1.0"
+     ```
+
+2. **Configure the API call:**
+
+   * Select the `GET` method.
+   * Set the request path to: `"/customers"`.
+
+3. **Create a response type:**
+
+   * Under **Target Type**, select **Create Type**.
+   * Go to the **Import** tab and paste the following JSON response to generate the type (e.g., `Customers`):
+
+   ```json
+   [
+     {
+       "id": "C001",
+       "name": "Clara Zhang",
+       "email": "clara@sample.net",
+       "phone": "555-345-6789",
+       "loyalty": {
+         "points": 2800,
+         "expiryDate": "2026-08-31"
+       }
+     },
+     {
+       "id": "C002",
+       "name": "Brian Holt",
+       "email": "brian@test.org",
+       "phone": "555-234-5678",
+       "loyalty": {
+         "points": 750,
+         "expiryDate": "2025-09-31"
+       }
+     }
+   ]
+   ```
+
+4. **Set the result variable name:**
+
+   * Use `customers` and click **Save**.
+
+5. **Add a `foreach` control:**
+
+   * Set the collection to `customers`.
+   * Set the variable name as `customer`.
+   * Choose `CustomersItem` as the item type.
+
+8. **Add an `if` condition inside the loop:**
+
+   * Condition:
+
+     ```
+     customer.loyalty.points >= 5000
+     ```
+
+9. **Add a log message inside the `if` block:**
+
+   * Use a **Log Info** node.
+   * Value: `customer.email`
+
+10. **Add configuration values:**
+
+   * Click **Add Construct** → **Configuration Artifact**.
+   * Add the following string variables (no default values):
+
+     * `clientId`
+     * `clientSecret`
+     * `refreshToken`
+
+10. **Add a Gmail connection:**
+
+    * Set the config type to `ConnectionConfig`.
+    * Choose `OAuth2RefreshTokenGrantConfig`.
+
+11. **Configure authentication values:**
+
+    * Use the following configuration:
+
+    ```
+    {
+        auth: {
+            refreshToken: refreshToken,
+            clientId: clientId,
+            clientSecret: clientSecret
+        }
+    }
+    ```
+
+12. **Set up the Gmail method:**
+
+    * Choose the method:
+      **"Sends the specified message to the recipients in the To, Cc, and Bcc headers."**
+    * For **User ID**, enter the sender email address (e.g., `"o2mart.info@gmail.com"`).
+
+13. **Define the email payload:**
+
+    * Choose `MessageRequest` as the payload.
+    * Click **Show** and include `to`, `subject`, and `bodyInText`.
+    * Set the values as:
+
+    ```
+    {
+        to: [customer.email],
+        subject: "O2 Mart - Loyalty promotions",
+        bodyInText: string `Hello ${customer.name}, 
+    Congratulations! You have earned special promotional rewards for accumulating ${customer.loyalty.points} loyalty points.`
+    }
+    ```
+
+14. **Save changes to the cloud:**
+
+    * Click **Save Changes in the Cloud**.
+
+15. **Connect to GitHub and deploy:**
+
+    * Integrate your GitHub account and create a repository.
+    * Click the **Deploy** button.
+
+16. **Open the solution in Devant Console:**
+
+    * Reload the workspace.
+    * Click **Open in Devant Console** and navigate to the **Automation** section.
+
 ## Integration as an API
 
 ### Overview
