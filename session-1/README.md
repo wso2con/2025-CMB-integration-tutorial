@@ -10,6 +10,57 @@
 
 - O2Mart Promotions Service OpenAPI specification - [o2martpromotions_openapi.yaml](./o2martpromotions_openapi.yaml)
 
+
+## Automation
+
+### Overview
+
+![Automation](./images/automation_ep.png)
+
+This session is based on the O2Mart sample scenario and will guide you through an Automation example. The following key steps will be covered:
+1. Creating an HTTP connection to the /customers resource and iterating through the list of customers and filtering those with 5,000 or more loyalty points.
+2. Sending exclusive offer email using the Gmail connector.
+
+
+
+Following json can be used to generate type.
+
+   ```json
+   [
+     {
+       "id": "C001",
+       "name": "Clara Zhang",
+       "email": "clara@sample.net",
+       "phone": "555-345-6789",
+       "loyalty": {
+         "points": 2800,
+         "expiryDate": "2026-08-31"
+       }
+     },
+     {
+       "id": "C002",
+       "name": "Brian Holt",
+       "email": "brian@test.org",
+       "phone": "555-234-5678",
+       "loyalty": {
+         "points": 750,
+         "expiryDate": "2025-09-31"
+       }
+     }
+   ]
+   ```
+
+Following can be used for `MessageRequest`
+
+```
+{
+    to: [customer.email],
+    subject: "O2 Mart - Exclusive offer for loyalty points",
+    bodyInText: string `Hello ${customer.name}, 
+Congratulations! You have earned special exclusive offer for accumulating ${customer.loyalty.points} loyalty points.`
+}
+```
+
 ## Integration as an API
 
 ### Overview
