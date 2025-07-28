@@ -1,6 +1,7 @@
 import ballerina/data.xmldata;
 import ballerina/http;
 import ballerina/lang.array;
+import ballerina/log;
 
 import o2mart/customer_experience_service.promos;
 
@@ -22,6 +23,20 @@ service /o2mart on httpDefaultListener {
 
             }
             return promotions;
+        } on fail error err {
+            // handle error
+            return error("unhandled error", err);
+        }
+    }
+
+    resource function post feedback(@http:Payload Feedback payload) returns error|json {
+        do {
+            FeedbackAnalysis feedbackAnalysis = check model->generate(`Analyze the sentiment of the following customer feedback for an order and extract relevant details: ${payload.feedback}`);
+            if feedbackAnalysis.sentiment == NEGATIVE {
+                log:printInfo("Negative feedback received: " + payload.feedback, orderId = payload.orderId, products = feedbackAnalysis.products, categories = feedbackAnalysis.categories);
+            } else {
+                log:printInfo("Received positive or neutral feedback: " + payload.feedback);
+            }
         } on fail error err {
             // handle error
             return error("unhandled error", err);
