@@ -5,3 +5,8 @@ version = "0.1.0"
 
 [build-options]
 sticky = true
+
+[[tool.openapi]]
+id = "promos"
+targetModule = "promos"
+filePath = "/Users/maryamm/WSO2Con/2025-CMB-integration-tutorial/session-1/customer_experience_service/specs/o2martpromotions_openapi.yaml"
