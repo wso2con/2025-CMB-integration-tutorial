@@ -9,4 +9,4 @@ sticky = true
 [[tool.openapi]]
 id = "promos"
 targetModule = "promos"
-filePath = "../../session-1/o2martpromotions_openapi.yaml"
+filePath = "./specs/o2martpromotions_openapi.yaml"
