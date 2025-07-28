@@ -172,6 +172,41 @@ The integration is as follows.
 
 You can test the integration with sample customer IDs - `C001` to `C007`
 
+Add a test for the data transformation function using the following values:
+
+  - product
+  
+  ```ballerina
+  {
+    "name": "PureHarvest Extra Virgin Olive Oil 1L ", 
+    "price": 10, 
+    "stock": 40, 
+    "id": "P1011"
+  }
+  ```
+
+  - promotion
+  
+  ```ballerina
+  {
+    "productId": "P1011", 
+    "percentage": 5, 
+    "ends": "2025-08-04"
+  }
+  ```
+  
+  - expected value 
+
+  ```ballerina
+  {
+    "productId": "P1011",
+    "label": "PureHarvest Extra Virgin Olive Oil 1L  - 5% OFF!",
+    "originalPrice": 10,
+    "discountedPrice": 9.5,
+    "validUntil": "Until August 4"
+  }
+  ```
+
 Also try generating tests via the Copilot.
 
 #### Feedback
