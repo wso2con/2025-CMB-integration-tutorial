@@ -74,7 +74,7 @@ Implementation of a REST API for a customer experience service, for the fictiona
 
 This scenario demonstrates:
  
-- working with different data types and formats in Ballerina 
+- working with different data types and formats 
   - data transformation and mapping
   - generating strong types from JSON and XML values
 - generating and using connections based on OpenAPI specifications
