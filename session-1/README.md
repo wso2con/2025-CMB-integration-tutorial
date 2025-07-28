@@ -157,6 +157,12 @@ Sample request payload:
     |};
     ```
 
+    You can use a prompt similar to the following
+
+    ```
+    Analyze the sentiment of the following customer feedback for an order and extract relevant details: ${feedback}
+    ```
+
 2. Update the feedback, along with the categories and products identified, in a database.
 
     ```sql
