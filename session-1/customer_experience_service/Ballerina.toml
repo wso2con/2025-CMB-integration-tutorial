@@ -1,0 +1,7 @@
+[package]
+org = "o2mart"
+name = "customer_experience_service"
+version = "0.1.0"
+
+[build-options]
+sticky = true
