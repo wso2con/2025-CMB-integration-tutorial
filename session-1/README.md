@@ -19,7 +19,7 @@
 
 This session is based on the O2Mart sample scenario and will guide you through an Automation example. The following key steps will be covered:
 1. Creating an HTTP connection to the /customers resource and iterating through the list of customers and filtering those with 5,000 or more loyalty points.
-2. Sending special promotional emails using the Gmail connector.
+2. Sending exclusive offer email using the Gmail connector.
 
 
 
@@ -55,9 +55,9 @@ Following can be used for `MessageRequest`
 ```
 {
     to: [customer.email],
-    subject: "O2 Mart - Loyalty promotions",
+    subject: "O2 Mart - Exclusive offer for loyalty points",
     bodyInText: string `Hello ${customer.name}, 
-Congratulations! You have earned special promotional rewards for accumulating ${customer.loyalty.points} loyalty points.`
+Congratulations! You have earned special exclusive offer for accumulating ${customer.loyalty.points} loyalty points.`
 }
 ```
 
