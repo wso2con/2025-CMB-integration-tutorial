@@ -289,3 +289,11 @@ Sample feedback to try with:
 }
 ```
 
+### Branches
+
+- [Level 0](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-level-0) - New project and downloaded OpenAPI specification file
+- [Level 1](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-level-1) - Initial version of the promotions endpoint
+- [Level 2](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-level-2) - Completed promotions endpoint with the date transformation
+- [Level 3](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-level-3) - Test(s)
+- [Level 4](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-level-4) - Initial version of the feedback endpoint - calling an LLM
+- [Final](https://github.com/wso2con/2025-CMB-integration-tutorial/tree/session-1-api-final) - Complete implementation
